@@ -1,3 +1,76 @@
+const translations = {
+  en: {
+    home: "Home",
+    about: "About",
+    skills: "Skills",
+    projects: "Projects",
+    contact: "Contact",
+    heroTitle: "Ahmed Sherif",
+    heroSubtitle: "Data Scientist",
+    heroText: "Transforming data into meaningful insights",
+    viewProjects: "View Projects",
+    contactMe: "Contact Me",
+    aboutTitle: "About Me",
+    aboutText1: "I'm Ahmed Sherif, a passionate Data Scientist dedicated to uncovering insights from complex datasets. I combine analytical skills with technical expertise to solve real-world problems through data-driven approaches.",
+    aboutText2: "With expertise in statistical analysis, machine learning, and data visualization, I help organizations make informed decisions based on data insights.",
+    getInTouch: "Get in Touch",
+    downloadCV: "Download CV",
+    programming: "Programming",
+    dataAnalysis: "Data Analysis Libraries",
+    dataScienceConcepts: "Data Science Concepts",
+    dataVisualization: "Data Visualization",
+    statisticalAnalysis: "Statistical Analysis",
+    dataCleaning: "Data Cleaning",
+    customerSegmentation: "Customer Segmentation Analysis",
+    customerSegmentationDesc: "Used K-means clustering to identify customer segments for a retail company, increasing targeted marketing efficiency by 35%.",
+    salesForecasting: "Predictive Sales Forecasting",
+    salesForecastingDesc: "Developed time-series models to predict quarterly sales figures with 92% accuracy, helping optimize inventory management.",
+    sentimentAnalysis: "Sentiment Analysis Tool",
+    sentimentAnalysisDesc: "Built an NLP-based sentiment analysis tool for social media data that helped a client improve product perception by identifying key pain points.",
+    viewProject: "View Project",
+    contactDesc: "I'm always interested in new opportunities and collaborations. Feel free to reach out!",
+    yourName: "Your Name",
+    yourEmail: "Your Email",
+    message: "Message",
+    sendMessage: "Send Message"
+  },
+  ar: {
+    home: "الرئيسية",
+    about: "عني",
+    skills: "المهارات",
+    projects: "المشاريع",
+    contact: "اتصل بي",
+    heroTitle: "أحمد شريف",
+    heroSubtitle: "عالم بيانات",
+    heroText: "تحويل البيانات إلى رؤى ذات معنى",
+    viewProjects: "عرض المشاريع",
+    contactMe: "اتصل بي",
+    aboutTitle: "نبذة عني",
+    aboutText1: "أنا أحمد شريف، عالم بيانات شغوف مكرس لاكتشاف الرؤى من مجموعات البيانات المعقدة. أجمع بين المهارات التحليلية والخبرة التقنية لحل المشكلات الواقعية من خلال النهج القائم على البيانات.",
+    aboutText2: "مع الخبرة في التحليل الإحصائي والتعلم الآلي وتصور البيانات، أساعد المؤسسات على اتخاذ قرارات مستنيرة بناءً على رؤى البيانات.",
+    getInTouch: "تواصل معي",
+    downloadCV: "تحميل السيرة الذاتية",
+    programming: "البرمجة",
+    dataAnalysis: "مكتبات تحليل البيانات",
+    dataScienceConcepts: "مفاهيم علوم البيانات",
+    dataVisualization: "تصور البيانات",
+    statisticalAnalysis: "التحليل الإحصائي",
+    dataCleaning: "تنظيف البيانات",
+    customerSegmentation: "تحليل تقسيم العملاء",
+    customerSegmentationDesc: "استخدام خوارزمية K-means للتجميع لتحديد شرائح العملاء لشركة تجزئة، مما أدى إلى زيادة كفاءة التسويق المستهدف بنسبة 35%.",
+    salesForecasting: "التنبؤ التنبؤي بالمبيعات",
+    salesForecastingDesc: "تطوير نماذج السلاسل الزمنية للتنبؤ بأرقام المبيعات الفصلية بدقة 92%، مما يساعد في تحسين إدارة المخزون.",
+    sentimentAnalysis: "أداة تحليل المشاعر",
+    sentimentAnalysisDesc: "بناء أداة تحليل مشاعر قائمة على معالجة اللغة الطبيعية لبيانات وسائل التواصل الاجتماعي ساعدت العميل في تحسين تصور المنتج من خلال تحديد نقاط الألم الرئيسية.",
+    viewProject: "عرض المشروع",
+    contactDesc: "أنا مهتم دائمًا بالفرص والتعاون الجديد. لا تتردد في التواصل!",
+    yourName: "اسمك",
+    yourEmail: "بريدك الإلكتروني",
+    message: "الرسالة",
+    sendMessage: "إرسال الرسالة"
+  }
+};
+
 document.addEventListener("DOMContentLoaded", function () {
   // Initialize EmailJS
   if (window.emailjs) {
@@ -175,4 +248,99 @@ document.addEventListener("DOMContentLoaded", function () {
 
   window.addEventListener("scroll", setActiveLink);
   setActiveLink();
+
+  // Language switching functionality
+  let currentLang = 'en';
+  const langToggle = document.getElementById('langToggle');
+  
+  function updateLanguage(lang) {
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    
+    // Update navigation items
+    document.querySelectorAll('nav ul li a').forEach(link => {
+      const key = link.getAttribute('href').replace('#', '');
+      if (translations[lang][key]) {
+        link.textContent = translations[lang][key];
+      }
+    });
+    
+    // Update hero section
+    document.querySelector('.hero-content h1').textContent = translations[lang].heroTitle;
+    document.querySelector('.hero-content h2').textContent = translations[lang].heroSubtitle;
+    document.querySelector('.hero-content p').textContent = translations[lang].heroText;
+    document.querySelector('.hero-buttons .btn.primary').textContent = translations[lang].viewProjects;
+    document.querySelector('.hero-buttons .btn.secondary').textContent = translations[lang].contactMe;
+    
+    // Update about section
+    document.querySelector('#about .section-title').textContent = translations[lang].aboutTitle;
+    const aboutParagraphs = document.querySelectorAll('#about .about-text p');
+    aboutParagraphs[0].textContent = translations[lang].aboutText1;
+    aboutParagraphs[1].textContent = translations[lang].aboutText2;
+
+    // Update about section buttons
+    const aboutButtons = document.querySelectorAll('.about-cta .btn');
+    aboutButtons.forEach(btn => {
+        if (btn.classList.contains('primary')) {
+            btn.textContent = translations[lang].getInTouch;
+        } else if (btn.classList.contains('secondary')) {
+            // Preserve the download icon while updating the text
+            btn.innerHTML = `${translations[lang].downloadCV} <i class="fas fa-download"></i>`;
+        }
+    });
+    
+    // Update skills section
+    document.querySelector('#skills .section-title').textContent = translations[lang].skills;
+    document.querySelectorAll('.skill-category h3').forEach((h3, index) => {
+      if (index === 0) h3.textContent = translations[lang].programming;
+      if (index === 1) h3.textContent = translations[lang].dataAnalysis;
+      if (index === 2) h3.textContent = translations[lang].dataScienceConcepts;
+    });
+    
+    // Update skill names
+    const skillNames = document.querySelectorAll('.skill-item span');
+    skillNames.forEach(span => {
+      if (span.textContent === "Data Visualization") span.textContent = translations[lang].dataVisualization;
+      if (span.textContent === "Statistical Analysis") span.textContent = translations[lang].statisticalAnalysis;
+      if (span.textContent === "Data Cleaning") span.textContent = translations[lang].dataCleaning;
+    });
+    
+    // Update projects section
+    document.querySelector('#projects .section-title').textContent = translations[lang].projects;
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach((card, index) => {
+      const title = card.querySelector('h3');
+      const desc = card.querySelector('p');
+      const btn = card.querySelector('.btn');
+      
+      if (index === 0) {
+        title.textContent = translations[lang].customerSegmentation;
+        desc.textContent = translations[lang].customerSegmentationDesc;
+      } else if (index === 1) {
+        title.textContent = translations[lang].salesForecasting;
+        desc.textContent = translations[lang].salesForecastingDesc;
+      } else if (index === 2) {
+        title.textContent = translations[lang].sentimentAnalysis;
+        desc.textContent = translations[lang].sentimentAnalysisDesc;
+      }
+      
+      btn.textContent = translations[lang].viewProject;
+    });
+    
+    // Update contact section
+    document.querySelector('#contact .section-title').textContent = translations[lang].contact;
+    document.querySelector('.contact-info p').textContent = translations[lang].contactDesc;
+    document.querySelector('label[for="name"]').textContent = translations[lang].yourName;
+    document.querySelector('label[for="email"]').textContent = translations[lang].yourEmail;
+    document.querySelector('label[for="message"]').textContent = translations[lang].message;
+    document.querySelector('#contactForm button').textContent = translations[lang].sendMessage;
+    
+    // Update language toggle button
+    langToggle.innerHTML = `<i class="fas fa-globe"></i> ${lang === 'en' ? 'عربي' : 'English'}`;
+  }
+  
+  langToggle.addEventListener('click', () => {
+    currentLang = currentLang === 'en' ? 'ar' : 'en';
+    updateLanguage(currentLang);
+  });
 });

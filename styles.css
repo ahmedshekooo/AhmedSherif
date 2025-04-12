@@ -961,3 +961,63 @@ footer {
     font-size: 0.9rem;
   }
 }
+
+/* RTL Support */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] .menu-toggle {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+[dir="rtl"] .logo {
+  margin-right: 0;
+  margin-left: 20px;
+}
+
+[dir="rtl"] nav ul li {
+  margin-left: 0;
+  margin-right: 30px;
+}
+
+[dir="rtl"] .contact-method i {
+  margin-right: 0;
+  margin-left: 15px;
+}
+
+/* Language Switcher */
+.lang-switch {
+  margin-left: 20px;
+}
+
+.lang-switch button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  background-color: var(--black);
+  color: var(--white);
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.lang-switch button:hover {
+  background-color: var(--yellow);
+  color: var(--black);
+}
+
+@media (max-width: 768px) {
+  .lang-switch {
+    margin-right: 15px;
+  }
+  
+  [dir="rtl"] .lang-switch {
+    margin-right: 0;
+    margin-left: 15px;
+  }
+}
