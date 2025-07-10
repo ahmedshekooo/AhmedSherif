@@ -246,6 +246,103 @@ document.addEventListener("DOMContentLoaded", function () {
     barObserver.observe(bar);
   });
 
+  // Projects Slider Functionality
+  const sliderWrapper = document.querySelector('.slider-wrapper');
+  if (sliderWrapper) {
+    const projectsContainer = sliderWrapper.querySelector('.projects-container');
+    const projectCards = sliderWrapper.querySelectorAll('.project-card');
+    const leftArrow = sliderWrapper.querySelector('.slider-arrow-left');
+    const rightArrow = sliderWrapper.querySelector('.slider-arrow-right');
+    const dots = document.querySelectorAll('.dot');
+    
+    let currentIndex = 0;
+    const totalSlides = projectCards.length;
+
+    function updateSlider() {
+      const translateX = -currentIndex * 100;
+      projectsContainer.style.transform = `translateX(${translateX}%)`;
+      
+      // Update dots
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentIndex);
+      });
+    }
+
+    function goToSlide(index) {
+      currentIndex = index;
+      updateSlider();
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      updateSlider();
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      updateSlider();
+    }
+
+    // Event listeners for arrows
+    if (leftArrow) {
+      leftArrow.addEventListener('click', prevSlide);
+    }
+    
+    if (rightArrow) {
+      rightArrow.addEventListener('click', nextSlide);
+    }
+
+    // Event listeners for dots
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => goToSlide(index));
+    });
+
+    // Auto-slide functionality
+    let autoSlideInterval = setInterval(nextSlide, 5000);
+
+    // Pause auto-slide on hover
+    sliderWrapper.addEventListener('mouseenter', () => {
+      clearInterval(autoSlideInterval);
+    });
+
+    sliderWrapper.addEventListener('mouseleave', () => {
+      autoSlideInterval = setInterval(nextSlide, 5000);
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        prevSlide();
+      } else if (e.key === 'ArrowRight') {
+        nextSlide();
+      }
+    });
+
+    // Touch/swipe support for mobile
+    let startX = 0;
+    let endX = 0;
+
+    sliderWrapper.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+    });
+
+    sliderWrapper.addEventListener('touchend', (e) => {
+      endX = e.changedTouches[0].clientX;
+      const diff = startX - endX;
+      
+      if (Math.abs(diff) > 50) { // Minimum swipe distance
+        if (diff > 0) {
+          nextSlide(); // Swipe left
+        } else {
+          prevSlide(); // Swipe right
+        }
+      }
+    });
+
+    // Initialize slider
+    updateSlider();
+  }
+
   window.addEventListener("scroll", setActiveLink);
   setActiveLink();
 
@@ -343,4 +440,5 @@ document.addEventListener("DOMContentLoaded", function () {
     currentLang = currentLang === 'en' ? 'ar' : 'en';
     updateLanguage(currentLang);
   });
+
 });
